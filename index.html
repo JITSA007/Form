@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Admission Portal</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom transitions for smooth step switching */
+        .step-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .step-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-brand-900 rounded-lg flex items-center justify-center text-white text-xl font-bold">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900 leading-tight">Jaipur National University</h1>
+                    <p class="text-xs text-gray-500 font-medium">Admission Portal 2026</p>
+                </div>
+            </div>
+            <div class="text-sm text-gray-500 hidden sm:block">
+                <i class="fa-regular fa-circle-question mr-1"></i> Need Help?
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+            
+            <!-- Progress Bar Section -->
+            <div class="bg-gray-50 border-b border-gray-200 px-6 py-8">
+                <div class="relative">
+                    <!-- Progress Track -->
+                    <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200">
+                        <div id="progressBar" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-brand-600 transition-all duration-500 ease-out w-[20%]"></div>
+                    </div>
+                    
+                    <!-- Steps Indicators -->
+                    <div class="flex justify-between text-xs font-medium text-gray-500 relative">
+                        <div class="step-indicator text-brand-700" data-step="1">Personal</div>
+                        <div class="step-indicator" data-step="2">Contact</div>
+                        <div class="step-indicator" data-step="3">Academic</div>
+                        <div class="step-indicator" data-step="4">Program</div>
+                        <div class="step-indicator" data-step="5">Review</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <form id="admissionForm" class="px-6 py-8 sm:px-10" onsubmit="return false;">
+                
+                <!-- Stage 1: Personal Details -->
+                <div class="step-content active" id="step1">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Personal Details</h2>
+                    <p class="text-gray-500 mb-6 text-sm">Please provide your legal identification details.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">First Name <span class="text-red-500">*</span></label>
+                            <input type="text" name="firstName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="Tera Pahela Naam">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Last Name <span class="text-red-500">*</span></label>
+                            <input type="text" name="lastName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="Tera Surname">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Date of Birth <span class="text-red-500">*</span></label>
+                            <input type="date" name="dob" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Gender <span class="text-red-500">*</span></label>
+                            <select name="gender" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none bg-white">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700">Nationality <span class="text-red-500">*</span></label>
+                            <select name="nationality" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none bg-white">
+                                <option value="">Select Country</option>
+                                <option value="USA">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="Canada">Canada</option>
+                                <option value="India">India</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 2: Contact Information -->
+                <div class="step-content" id="step2">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Contact Information</h2>
+                    <p class="text-gray-500 mb-6 text-sm">How can we reach you regarding your application?</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Email Address <span class="text-red-500">*</span></label>
+                            <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="john.doe@example.com">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Phone Number <span class="text-red-500">*</span></label>
+                            <input type="tel" name="phone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="+1 (555) 000-0000">
+                        </div>
+                        <div class="space-y-2 md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700">Street Address <span class="text-red-500">*</span></label>
+                            <input type="text" name="address" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="123 University Ave">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">City <span class="text-red-500">*</span></label>
+                            <input type="text" name="city" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Zip/Postal Code <span class="text-red-500">*</span></label>
+                            <input type="text" name="zip" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 3: Academic Background -->
+                <div class="step-content" id="step3">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Academic Background</h2>
+                    <p class="text-gray-500 mb-6 text-sm">Tell us about your previous education.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 mb-4">
+                            <h3 class="text-sm font-semibold text-blue-900 mb-2"><i class="fa-solid fa-school mr-2"></i>High School / Secondary Education</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">School Name</label>
+                                    <input type="text" name="schoolName" required class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:border-blue-500 outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Graduation Year</label>
+                                    <input type="number" name="gradYear" min="2000" max="2030" required class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:border-blue-500 outline-none text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">GPA / Percentage</label>
+                                    <input type="text" name="gpa" required class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:border-blue-500 outline-none text-sm" placeholder="e.g. 3.8 or 95%">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 mb-1">Board/Curriculum</label>
+                                    <input type="text" name="board" required class="w-full px-3 py-2 bg-white border border-gray-300 rounded focus:border-blue-500 outline-none text-sm" placeholder="e.g. IB, CBSE, SAT">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700">Standardized Test Scores (Optional)</label>
+                            <input type="text" name="testScores" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="SAT, ACT, IELTS, etc.">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 4: Program Selection -->
+                <div class="step-content" id="step4">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Program Selection</h2>
+                    <p class="text-gray-500 mb-6 text-sm">What do you wish to study at Lumina University?</p>
+                    
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Degree Level <span class="text-red-500">*</span></label>
+                                <select name="degreeLevel" id="degreeLevel" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none bg-white">
+                                    <option value="">Select Level</option>
+                                    <option value="Undergraduate">Undergraduate (Bachelor's)</option>
+                                    <option value="Postgraduate">Postgraduate (Master's/PhD)</option>
+                                    <option value="Diploma">Diploma / Certificate</option>
+                                </select>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Intake Session <span class="text-red-500">*</span></label>
+                                <select name="intake" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none bg-white">
+                                    <option value="">Select Session</option>
+                                    <option value="Fall 2026">Fall 2026</option>
+                                    <option value="Spring 2027">Spring 2027</option>
+                                    <option value="Summer 2027">Summer 2027</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2 md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Department & Major <span class="text-red-500">*</span></label>
+                                <select name="major" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none bg-white">
+                                    <option value="">Select Major</option>
+                                    <optgroup label="Engineering & Technology">
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Data Science">Data Science</option>
+                                    </optgroup>
+                                    <optgroup label="Business & Management">
+                                        <option value="Business Administration">Business Administration</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Marketing">Marketing</option>
+                                    </optgroup>
+                                    <optgroup label="Arts & Humanities">
+                                        <option value="Psychology">Psychology</option>
+                                        <option value="English Literature">English Literature</option>
+                                        <option value="Graphic Design">Graphic Design</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2 md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Statement of Purpose (Brief) <span class="text-red-500">*</span></label>
+                                <textarea name="sop" rows="4" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-colors outline-none" placeholder="Tell us why you want to join this program..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage 5: Review & Submit -->
+                <div class="step-content" id="step5">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Review Application</h2>
+                    <p class="text-gray-500 mb-6 text-sm">Please verify all information before submitting. This cannot be undone.</p>
+                    
+                    <div class="bg-gray-50 rounded-xl p-6 border border-gray-200 mb-6 space-y-4 max-h-[400px] overflow-y-auto" id="reviewContainer">
+                        <!-- Content populated by JS -->
+                        <div class="text-center text-gray-400 py-8">
+                            <i class="fa-solid fa-spinner fa-spin text-2xl"></i>
+                            <p class="mt-2">Loading preview...</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-3 mb-6">
+                        <div class="flex items-center h-5">
+                            <input id="terms" name="terms" type="checkbox" required class="w-4 h-4 border-gray-300 rounded text-brand-600 focus:ring-brand-500">
+                        </div>
+                        <div class="text-sm">
+                            <label for="terms" class="font-medium text-gray-700">I declare that the information provided is true and correct.</label>
+                            <p class="text-gray-500">I agree to the <a href="#" class="text-brand-600 hover:underline">Terms of Admission</a> and <a href="#" class="text-brand-600 hover:underline">Privacy Policy</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="mt-8 pt-6 border-t border-gray-100 flex justify-between">
+                    <button type="button" id="prevBtn" class="hidden px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 transition-all">
+                        Back
+                    </button>
+                    <div class="flex-1"></div> <!-- Spacer -->
+                    <button type="button" id="nextBtn" class="px-8 py-2.5 rounded-lg bg-brand-600 text-white font-medium hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 transition-all shadow-lg shadow-brand-500/30">
+                        Next Step
+                    </button>
+                    <button type="submit" id="submitBtn" class="hidden px-8 py-2.5 rounded-lg bg-green-600 text-white font-medium hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all shadow-lg shadow-green-500/30">
+                        Submit Application
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Success Message (Hidden by default) -->
+            <div id="successMessage" class="hidden flex flex-col items-center justify-center py-16 px-6 text-center">
+                <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-check text-4xl text-green-600"></i>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Application Submitted!</h2>
+                <p class="text-gray-500 max-w-md mb-8">Thank you for applying to Lumina University. We have sent a confirmation email to your registered address. Your application ID is <span class="font-mono font-bold text-gray-900">#LU-2026-8921</span>.</p>
+                <button onclick="location.reload()" class="px-6 py-2 rounded-lg bg-gray-900 text-white font-medium hover:bg-gray-800 transition-all">
+                    Return to Home
+                </button>
+            </div>
+
+        </div>
+    </main>
+    
+    <footer class="bg-white border-t border-gray-200 py-6 mt-auto">
+        <div class="max-w-4xl mx-auto px-4 text-center text-sm text-gray-500">
+            &copy; 2026 Lumina University. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('admissionForm');
+            const steps = Array.from(document.querySelectorAll('.step-content'));
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const progressBar = document.getElementById('progressBar');
+            const stepIndicators = document.querySelectorAll('.step-indicator');
+            const successMessage = document.getElementById('successMessage');
+            
+            let currentStep = 0;
+
+            function updateUI() {
+                // Show/Hide steps
+                steps.forEach((step, index) => {
+                    if(index === currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+
+                // Update Progress Bar
+                const progress = ((currentStep + 1) / steps.length) * 100;
+                progressBar.style.width = `${progress}%`;
+
+                // Update Indicators logic (Optional visual cues)
+                stepIndicators.forEach((ind, idx) => {
+                    if (idx <= currentStep) {
+                        ind.classList.add('text-brand-700', 'font-bold');
+                    } else {
+                        ind.classList.remove('text-brand-700', 'font-bold');
+                    }
+                });
+
+                // Button Visibility
+                if (currentStep === 0) {
+                    prevBtn.classList.add('hidden');
+                } else {
+                    prevBtn.classList.remove('hidden');
+                }
+
+                if (currentStep === steps.length - 1) {
+                    nextBtn.classList.add('hidden');
+                    submitBtn.classList.remove('hidden');
+                    generateReview(); // Populate review when reaching last step
+                } else {
+                    nextBtn.classList.remove('hidden');
+                    submitBtn.classList.add('hidden');
+                }
+                
+                // Scroll to top of form
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            function validateStep(stepIndex) {
+                const currentStepEl = steps[stepIndex];
+                const inputs = currentStepEl.querySelectorAll('input[required], select[required], textarea[required]');
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('border-red-500', 'ring-1', 'ring-red-500');
+                        // Remove error styling on input
+                        input.addEventListener('input', () => {
+                            input.classList.remove('border-red-500', 'ring-1', 'ring-red-500');
+                        }, { once: true });
+                    }
+                });
+                
+                // Checkbox specific validation for last step
+                if (stepIndex === steps.length - 1) {
+                    const terms = document.getElementById('terms');
+                    if (!terms.checked) {
+                        isValid = false;
+                        terms.classList.add('ring-2', 'ring-red-500');
+                        terms.addEventListener('change', () => terms.classList.remove('ring-2', 'ring-red-500'));
+                    }
+                }
+
+                if (!isValid) {
+                    // Simple shake animation or toast could be added here
+                    alert("Please fill in all required fields marked with *");
+                }
+                return isValid;
+            }
+
+            function generateReview() {
+                const formData = new FormData(form);
+                const reviewContainer = document.getElementById('reviewContainer');
+                
+                // Helper to create review row
+                const createRow = (label, value) => `
+                    <div class="flex justify-between py-2 border-b border-gray-100 last:border-0">
+                        <span class="text-sm font-medium text-gray-500">${label}</span>
+                        <span class="text-sm font-semibold text-gray-900 text-right">${value || '-'}</span>
+                    </div>
+                `;
+
+                // Map simplistic names to nice labels
+                const labels = {
+                    firstName: "First Name", lastName: "Last Name", dob: "Date of Birth",
+                    gender: "Gender", nationality: "Nationality", email: "Email",
+                    phone: "Phone", address: "Address", city: "City", zip: "Zip Code",
+                    schoolName: "High School", gradYear: "Graduation Year", gpa: "GPA/Score",
+                    degreeLevel: "Degree Level", intake: "Intake", major: "Major"
+                };
+
+                let html = '<div class="space-y-1">';
+                
+                // Sections to make it readable
+                html += '<h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Personal & Contact</h3>';
+                for (let [key, value] of formData.entries()) {
+                    if(labels[key] && value) {
+                        html += createRow(labels[key], value);
+                    }
+                }
+                html += '</div>';
+
+                reviewContainer.innerHTML = html;
+            }
+
+            // Event Listeners
+            nextBtn.addEventListener('click', () => {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    updateUI();
+                }
+            });
+
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateUI();
+                }
+            });
+
+            submitBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (validateStep(currentStep)) {
+                    // Simulate API call
+                    submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
+                    submitBtn.disabled = true;
+                    
+                    setTimeout(() => {
+                        form.classList.add('hidden');
+                        document.querySelector('.bg-gray-50.border-b').classList.add('hidden'); // Hide progress bar
+                        successMessage.classList.remove('hidden');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 1500);
+                }
+            });
+
+            // Initialize
+            updateUI();
+        });
+    </script>
+</body>
+</html>
